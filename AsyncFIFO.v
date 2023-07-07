@@ -84,11 +84,17 @@ For rclk:
 r_ptr:
 0  | 1  | 2  | 3  | 4
 
+FIFO Full Condition:
+
 Let's see the comparison that takes place at the read domain at 101ns.
 The read pointer is 4 and the write pointer that is present at the read domain is from 2 clock cycles earlier.
 so we need to check what was the write pointer at 61ns. The w_ptr is also 4. But the actual value would be 8. 
-So the actual w_ptr can be 4 ahead of what was read. So we can keep a buffer of 4 for w_ptr to check FIFO full.
+So the actual w_ptr can be 4 ahead of what was read. So we can keep a buffer of 4 for w_ptr to check FIFO full condition.
 
+FIFO Empty Condition:
+Let's see the comparison that takes place at the read domain at 100ns.
+The write pointer is 7 at the write clock domain. The value read at write domain is 2 cycles old i.e. at 75ns.
+The read value will be 2. But the actual value is 3. So we need a buffer of 1 for the read pointer.
 
 
 
