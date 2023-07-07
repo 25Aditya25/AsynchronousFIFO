@@ -66,10 +66,30 @@ no. of data items read in 1500ns = 1500ns/20ns = 75
 Remaining no. of items to be stored in the FIFO = 120 - 75 = 45
 
 so we will keep the FIFO depth as 64 so 6 bits are required to store the pointer addresses. 
-We are over designing the FIFO still we will take measures to make sure the two cycle delay of the synchronizers is taken care of.
+We are over-designing the FIFO still we will take measures to make sure the two-cycle delay of the synchronizers is taken care of.
 
 Data getting written after each 12.5ns
 Data is getting read after each 20ns
+
+Assume that writing and reading are taking place at the same time.
+
+The clock edges are as below:(Assume timescape as 1ns)
+For wclk:
+0 | 12.5 | 25 | 37.5 | 50 | 62.5 | 75 | 87.5 | 100
+w_ptr:
+0 | 1    | 2  | 3    | 4  | 5    | 6  | 7    | 8
+
+For rclk:
+21 | 41 | 61 | 81 | 101
+r_ptr:
+0  | 1  | 2  | 3  | 4
+
+Let's see the comparison that takes place at the read domain at 101ns.
+The read pointer is 4 and the write pointer that is present at the read domain is from 2 clock cycles earlier.
+so we need to check what was the write pointer at 61ns. The w_ptr is also 4. But the actual value would be 8. 
+So the actual w_ptr can be 4 ahead of what was read. So we can keep a buffer of 4 for w_ptr to check FIFO full.
+
+
 
 
 
