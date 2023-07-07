@@ -66,6 +66,14 @@ no. of data items read in 1500ns = 1500ns/20ns = 75
 Remaining no. of items to be stored in the FIFO = 120 - 75 = 45
 
 so we will keep the FIFO depth as 64 so 6 bits are required to store the pointer addresses. 
+We are over designing the FIFO still we will take measures to make sure the two cycle delay of the synchronizers is taken care of.
+
+Data getting written after each 12.5ns
+Data is getting read after each 20ns
+
+
+
+
 */
 
 
